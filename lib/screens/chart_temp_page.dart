@@ -12,7 +12,7 @@ class _DayData {
   final int number;
   final double value;
 
-  _DayData({required this.number, required this.value});
+  const _DayData({required this.number, required this.value});
 }
 
 enum _TemperatureKind { minimum, maximum, average }
@@ -43,10 +43,10 @@ class ChartTemperaturePage extends StatelessWidget {
     return data;
   }
 
-  List<_DayData> _getExtremeTemperatureData(List<ExtremeTemperatureModel> days) {
+  List<_DayData> _getExtremeTemperatureData(List<ExtremeValueModel> days) {
     List<_DayData> data = [];
     for (int i = 0; i < days.length; i++) {
-      data.add(_DayData(number: i + 1, value: days[i].temperature));
+      data.add(_DayData(number: i + 1, value: days[i].value));
     }
     return data;
   }

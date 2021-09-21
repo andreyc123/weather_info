@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:weather_info/models/home_model.dart';
+import 'package:weather_info/screens/records_page.dart';
 import 'package:weather_info/screens/select_country_page.dart';
 import 'package:weather_info/widgets/app_card.dart';
 import 'package:weather_info/screens/temp_page.dart';
@@ -99,7 +100,8 @@ class _HomePageState extends State<HomePage> {
         TemperaturesPage(),
         ChartTemperaturePage(),
         ExtremeTemperaturesPage(kind: ExtremeTemperatureKind.maximum),
-        ExtremeTemperaturesPage(kind: ExtremeTemperatureKind.minimum)
+        ExtremeTemperaturesPage(kind: ExtremeTemperatureKind.minimum),
+        RecordsPage()
       ],
       onPageChanged: (pageIndex) => _selectedPageIndex = pageIndex,
     );

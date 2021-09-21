@@ -15,8 +15,10 @@ class WeatherWebApiClient implements WeatherApiClient {
   static final monthParam   = 'month';
   static final yearParam    = 'year';
 
-  static final int _maxTempTagIndex = 2;
-  static final int _minTempTagIndex = 3;
+  static final int _monthTempRecordsTagIndex      = 0;
+  static final int _monthRainfallRecordsTagIndex  = 1;
+  static final int _maxTempTagIndex               = 2;
+  static final int _minTempTagIndex               = 3;
 
   List<WeatherDayModel> _parseTemperatures(Document document) {
     List<WeatherDayModel> days = [];
@@ -80,8 +82,10 @@ class WeatherWebApiClient implements WeatherApiClient {
       return WeatherInfoModel(
           temperatureDays: _parseTemperatures(document),
           minTemperatures: _parseTemperaturesValues(document, _minTempTagIndex),
-          maxTemperatures: _parseTemperaturesValues(document, _maxTempTagIndex));
-    } on SocketException catch(e) {
+          maxTemperatures: _parseTemperaturesValues(document, _maxTempTagIndex),
+          monthTempRecords: _parseTemperaturesValues(document, _monthTempRecordsTagIndex),
+          monthRainfallRecords: _parseTemperaturesValues(document, _monthRainfallRecordsTagIndex));
+    } on SocketException catch(_) {
       throw NetworkApiException('No Internet');
     } on HttpException catch(e) {
       throw NetworkApiException('Http error: $e.message');

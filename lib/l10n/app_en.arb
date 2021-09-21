@@ -12,6 +12,7 @@
   "max": "Max.",
   "year": "Year",
   "temp": "Temp.",
+  "records": "Records",
   "selectCounty": "Select Country",
   "selectCity": "Select City",
   "search": "Search...",

@@ -38,10 +38,10 @@ class HomeModel extends ChangeNotifier {
   String? get apiErrorMessage => _apiException?.message;
 
   List<WeatherDayModel> get temperatureDays => _weatherInfo?.temperatureDays ?? [];
-  List<ExtremeTemperatureModel> get minTemperatures =>
-      (_weatherInfo?.minTemperatures ?? []).map((e) => ExtremeTemperatureModel.fromRawString(e)).toList();
-  List<ExtremeTemperatureModel> get maxTemperatures =>
-      (_weatherInfo?.maxTemperatures ?? []).map((e) => ExtremeTemperatureModel.fromRawString(e)).toList();
+  List<ExtremeValueModel> get minTemperatures =>
+      (_weatherInfo?.minTemperatures ?? []).map((e) => ExtremeValueModel.fromRawString(e)).toList();
+  List<ExtremeValueModel> get maxTemperatures =>
+      (_weatherInfo?.maxTemperatures ?? []).map((e) => ExtremeValueModel.fromRawString(e)).toList();
 
   DateTime? get selectedDate {
     if (_selectedMonth != null || _selectedYear != null) {
@@ -52,6 +52,18 @@ class HomeModel extends ChangeNotifier {
 
   int? get selectedCountryId => _selectedCountryId;
   int? get selectedCityId => _selectedCityId;
+
+  WeatherRecordModel? get monthTempRecord => _weatherInfo?.monthTempRecord;
+  WeatherRecordModel? get monthRainfallRecord => _weatherInfo?.monthRainfallRecord;
+
+  String getSelectedMonthAsString(BuildContext context) {
+    final date = selectedDate;
+    if (date != null) {
+      final formatter = DateFormat('MMMM', Localizations.localeOf(context).toString());
+      return formatter.format(date).capitalize();
+    }
+    return '';
+  }
 
   String getSelectedDateAsString(BuildContext context) {
     final date = selectedDate;

@@ -17,7 +17,7 @@ class ExtremeTemperaturesPage extends StatelessWidget {
     required this.kind
   }) : _color = kind == ExtremeTemperatureKind.minimum ? Colors.blue : Colors.red;
 
-  WeatherDay _buildDay(BuildContext context, ExtremeTemperatureModel dayModel, int number) {
+  WeatherDay _buildDay(BuildContext context, ExtremeValueModel dayModel, int number) {
     final loc = AppLocalizations.of(context)!;
     return WeatherDay(
         params: [
@@ -50,7 +50,7 @@ class ExtremeTemperaturesPage extends StatelessWidget {
         title: prefix + ' ' + localizedTemp,
         child: Consumer<HomeModel>(
             builder: (_, home, __) {
-              final List<ExtremeTemperatureModel> days;
+              final List<ExtremeValueModel> days;
               switch (kind) {
                 case ExtremeTemperatureKind.minimum:
                   days = home.minTemperatures;

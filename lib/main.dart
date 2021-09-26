@@ -7,6 +7,7 @@ import 'package:weather_info/models/home_model.dart';
 import 'package:weather_info/models/locations_model.dart';
 import 'package:weather_info/screens/home_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'common/app_storage_impl.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,9 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final apiClient = WeatherWebApiClient();
     final appSettings = SharedPrefsAppSettings();
+    final appStorage = AppStorageImpl();
     return MultiProvider(
       providers: [
-        Provider(create: (_) => LocationsModel()),
+        ChangeNotifierProvider<LocationsModel>(create: (_) =>
+            LocationsModel(appStorage: appStorage)),
         ChangeNotifierProxyProvider<LocationsModel, HomeModel>(
           create: (_) => HomeModel(apiClient: apiClient, appSettings: appSettings),
           update: (_, locations, home) {
@@ -30,17 +33,14 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        title: 'Weather Monitor',
+        onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [
-          Locale('en', ''),
-          Locale('ru', ''),
-        ],
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

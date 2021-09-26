@@ -1,0 +1,183 @@
+[
+  {
+    "id": 1000,
+    "name": {
+      "en": "Ukraine",
+      "ru": "Украина"
+    },
+    "assetName": "ukraine-flag-square-xs",
+    "cities": [
+      {
+        "id": 33345,
+        "name": {
+          "en": "Kyiv",
+          "ru": "Киев"
+        }
+      },
+      {
+        "id": 34300,
+        "name": {
+          "en": "Kharkiv",
+          "ru": "Харьков"
+        }
+      },
+      {
+        "id": 33562,
+        "name": {
+          "en": "Vinnytsia",
+          "ru": "Винница"
+        }
+      },
+      {
+        "id": 33910,
+        "name": {
+          "en": "Heniches'k",
+          "ru": "Геническ"
+        }
+      },
+      {
+        "id": 34504,
+        "name": {
+          "en": "Dnipro",
+          "ru": "Днепр"
+        }
+      },
+      {
+        "id": 34601,
+        "name": {
+          "en": "Zaporizhzhia",
+          "ru": "Запорожье"
+        }
+      },
+      {
+        "id": 33526,
+        "name": {
+          "en": "Ivano Frankivsk",
+          "ru": "Ивано-Франковск"
+        }
+      },
+      {
+        "id": 33889,
+        "name": {
+          "en": "Izmail",
+          "ru": "Измаил"
+        }
+      },
+      {
+        "id": 33261,
+        "name": {
+          "en": "Konotop",
+          "ru": "Конотоп"
+        }
+      },
+      {
+        "id": 33791,
+        "name": {
+          "en": "Kryvyi Rih",
+          "ru": "Кривой Рог"
+        }
+      },
+      {
+        "id": 33711,
+        "name": {
+          "en": "Kropyvnytskyi",
+          "ru": "Кропивницкий"
+        }
+      },
+      {
+        "id": 33393,
+        "name": {
+          "en": "Lviv",
+          "ru": "Львов"
+        }
+      },
+      {
+        "id": 34712,
+        "name": {
+          "en": "Mariupol'",
+          "ru": "Мариуполь"
+        }
+      },
+      {
+        "id": 33837,
+        "name": {
+          "en": "Odesa",
+          "ru": "Одесса"
+        }
+      },
+      {
+        "id": 33506,
+        "name": {
+          "en": "Poltava",
+          "ru": "Полтава"
+        }
+      },
+      {
+        "id": 33301,
+        "name": {
+          "en": "Rivne",
+          "ru": "Ровно"
+        }
+      },
+      {
+        "id": 33631,
+        "name": {
+          "en": "Uzhhorod",
+          "ru": "Ужгород"
+        }
+      },
+      {
+        "id": 33902,
+        "name": {
+          "en": "Kherson",
+          "ru": "Херсон"
+        }
+      },
+      {
+        "id": 33135,
+        "name": {
+          "en": "Chernihiv",
+          "ru": "Чернигов"
+        }
+      },
+      {
+        "id": 33658,
+        "name": {
+          "en": "Chernivtsi",
+          "ru": "Черновцы"
+        }
+      }
+    ]
+  },
+  {
+    "id": 1001,
+    "name": {
+      "en": "Russia",
+      "ru": "Россия"
+    },
+    "assetName": "russia-flag-square-xs",
+    "cities": [
+      {
+        "id": 27612,
+        "name": {
+          "en": "Moscow",
+          "ru": "Москва"
+        }
+      },
+      {
+        "id": 26063,
+        "name": {
+          "en": "Saint Petersburg",
+          "ru": "Санкт-Петербург"
+        }
+      },
+      {
+        "id": 29638,
+        "name": {
+          "en": "Novosibirsk",
+          "ru": "Новосибирск"
+        }
+      }
+    ]
+  }
+]

@@ -24,7 +24,9 @@ class HomeModel extends ChangeNotifier {
   int? _selectedYear;
   late LocationsModel _locations;
 
-  HomeModel({required this.apiClient, required this.appSettings}) {
+  HomeModel({
+    required this.apiClient,
+    required this.appSettings}) {
     _handleAppStart();
   }
 
@@ -56,15 +58,6 @@ class HomeModel extends ChangeNotifier {
   WeatherRecordModel? get monthTempRecord => _weatherInfo?.monthTempRecord;
   WeatherRecordModel? get monthRainfallRecord => _weatherInfo?.monthRainfallRecord;
 
-  String getSelectedMonthAsString(BuildContext context) {
-    final date = selectedDate;
-    if (date != null) {
-      final formatter = DateFormat('MMMM', Localizations.localeOf(context).toString());
-      return formatter.format(date).capitalize();
-    }
-    return '';
-  }
-
   String getSelectedDateAsString(BuildContext context) {
     final date = selectedDate;
     if (date != null) {
@@ -75,9 +68,13 @@ class HomeModel extends ChangeNotifier {
   }
 
   String getSelectedLocationAsString(BuildContext context) {
+    if (!_locations.hasData) {
+      return '';
+    }
+
     String? result;
     if (_selectedCountryId != null && _selectedCityId != null) {
-      result = _locations.findLocationNameBy(context, _selectedCountryId!, _selectedCityId!);
+      result = _locations.findLocationNameBy(_selectedCountryId!, _selectedCityId!);
     }
     return result ?? AppLocalizations.of(context)!.selectYourLocation;
   }

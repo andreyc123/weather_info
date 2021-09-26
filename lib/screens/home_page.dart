@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:weather_info/models/home_model.dart';
+import 'package:weather_info/models/locations_model.dart';
 import 'package:weather_info/screens/records_page.dart';
 import 'package:weather_info/screens/select_country_page.dart';
 import 'package:weather_info/widgets/app_card.dart';
@@ -23,6 +24,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      final locale = Localizations.localeOf(context).toString();
+      context.read<LocationsModel>().readData(locale: locale);
+    });
+  }
 
   void _navigateToCountriesPage() {
     Navigator.push(

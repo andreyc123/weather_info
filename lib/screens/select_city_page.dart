@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:weather_info/models/city_model.dart';
 import 'package:weather_info/models/home_model.dart';
 import 'package:weather_info/models/select_city_model.dart';
-import 'package:weather_info/utils/locations_localization.dart';
 import 'package:weather_info/widgets/app_card.dart';
 import 'package:weather_info/widgets/gradient_container.dart';
 import 'package:weather_info/constants/constants.dart' as Constants;
@@ -36,7 +35,7 @@ class SelectCityPage extends StatelessWidget {
           fontSize: 18.0
         ),
         onChanged: (text) {
-          selectCity.changeFilterText(context, text);
+          selectCity.changeFilterText(text);
         },
       );
     } else {
@@ -51,7 +50,7 @@ class SelectCityPage extends StatelessWidget {
                 color: Colors.white
             ),
             onPressed: () {
-              selectCity.toggleFilter(context);
+              selectCity.toggleFilter();
               if (selectCity.isFilterSelected) {
                 _focusNode.requestFocus();
               }
@@ -81,7 +80,7 @@ class SelectCityPage extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  LocationsLocalization.getCityName(context, city.name),
+                  city.name,
                   style: TextStyle(
                       fontSize: 24.0,
                       color: Colors.black54,

@@ -22,17 +22,17 @@ class WeatherWebApiClient implements WeatherApiClient {
 
   List<WeatherDayModel> _parseTemperatures(Document document) {
     List<WeatherDayModel> days = [];
-    var climateDivs = document.getElementsByClassName('climate-table-wrap');
+    final climateDivs = document.getElementsByClassName('climate-table-wrap');
     if (climateDivs.isNotEmpty) {
-      var tableTags = climateDivs[0].getElementsByTagName('table');
+      final tableTags = climateDivs[0].getElementsByTagName('table');
       if (tableTags.isNotEmpty) {
-        var tableTag = tableTags[0];
+        final tableTag = tableTags[0];
         if (tableTag.children.isNotEmpty) {
-          var bodyTag = tableTag.children[0];
-          var trTags = bodyTag.children;
+          final bodyTag = tableTag.children[0];
+          final trTags = bodyTag.children;
           if (trTags.length >= 3) {
             for (int trIndex = 2; trIndex < trTags.length; trIndex++) {
-              var tdTags = trTags[trIndex].children;
+              final tdTags = trTags[trIndex].children;
               if (tdTags.length >= 6 && !WeatherDayModel.isDayEmpty(elements: tdTags)) {
                 days.add(WeatherDayModel.fromElements(tdTags));
               }
@@ -46,12 +46,12 @@ class WeatherWebApiClient implements WeatherApiClient {
 
   List<String> _parseTemperaturesValues(Document document, int tempTagIndex) {
     List<String> days = [];
-    var listsDivs = document.getElementsByClassName('top-list-biilet__lists');
+    final listsDivs = document.getElementsByClassName('top-list-biilet__lists');
     if (listsDivs.length >= tempTagIndex + 1) {
-      var listsDiv = listsDivs[tempTagIndex];
-      var ulTags = listsDiv.getElementsByClassName('values');
+      final listsDiv = listsDivs[tempTagIndex];
+      final ulTags = listsDiv.getElementsByClassName('values');
       if (ulTags.isNotEmpty) {
-        var ulTag = ulTags[0];
+        final ulTag = ulTags[0];
         days = ulTag.children.map((e) => e.text).toList();
       }
     }
@@ -69,16 +69,15 @@ class WeatherWebApiClient implements WeatherApiClient {
     }
 
     try {
-      var requestUri = Uri.http(host, monitorPath, queryParams);
+      final requestUri = Uri.http(host, monitorPath, queryParams);
       final response = await http.get(requestUri);
 
-      var statusCode = response.statusCode;
+      final statusCode = response.statusCode;
       if (statusCode != 200) {
         throw ServerApiException('Something went wrong (code=$statusCode)', statusCode);
       }
 
-      var result = response.body;
-      var document = parse(result);
+      final document = parse(response.body);
       return WeatherInfoModel(
           temperatureDays: _parseTemperatures(document),
           minTemperatures: _parseTemperaturesValues(document, _minTempTagIndex),

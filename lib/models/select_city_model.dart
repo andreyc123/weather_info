@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_info/models/city_model.dart';
-import 'package:weather_info/utils/locations_localization.dart';
 import 'locations_model.dart';
 
 class SelectCityModel extends ChangeNotifier {
@@ -36,23 +35,23 @@ class SelectCityModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleFilter(BuildContext context) {
+  void toggleFilter() {
     _filterSelected = !_filterSelected;
     if (_filterSelected) {
-      changeFilterText(context, filterText);
+      changeFilterText(filterText);
     } else {
-      changeFilterText(context, '');
+      changeFilterText('');
     }
   }
 
-  void changeFilterText(BuildContext context, String newFilterText) {
+  void changeFilterText(String newFilterText) {
     _filterText = newFilterText;
     if (newFilterText.isEmpty) {
       _filteredCities = originCities;
     } else {
       final f = newFilterText.toLowerCase();
       _filteredCities = originCities.where((element) =>
-          LocationsLocalization.getCityName(context, element.name).toLowerCase().startsWith(f)).toList();
+          element.name.toLowerCase().startsWith(f)).toList();
     }
     notifyListeners();
   }

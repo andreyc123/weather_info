@@ -5,7 +5,6 @@ import 'package:weather_info/models/home_model.dart';
 import 'package:weather_info/models/locations_model.dart';
 import 'package:weather_info/models/select_city_model.dart';
 import 'package:weather_info/screens/select_city_page.dart';
-import 'package:weather_info/utils/locations_localization.dart';
 import 'package:weather_info/widgets/app_card.dart';
 import 'package:weather_info/widgets/gradient_container.dart';
 import 'package:weather_info/constants/constants.dart' as Constants;
@@ -66,7 +65,7 @@ class SelectCountryPage extends StatelessWidget {
               SizedBox(width: 9.0),
               Expanded(
                   child: Text(
-                    LocationsLocalization.getCountryName(context, country.name),
+                    country.name,
                     style: TextStyle(
                         fontSize: 24.0,
                         color: Colors.black54,

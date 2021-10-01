@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_info/models/home_model.dart';
@@ -29,13 +30,13 @@ class TemperaturesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppHeaderCard.arrowButtons(
-        icon: Icons.thermostat_auto_outlined,
-        title: AppLocalizations.of(context)!.temperature,
-        child: Consumer<HomeModel>(
-            builder: (_, home, __) {
-              final days = home.temperatureDays;
-              return Scrollbar(
+    return Consumer<HomeModel>(
+        builder: (_, home, __) {
+          final days = home.temperatureDays;
+          return AppHeaderCard.arrowButtons(
+              icon: Icons.thermostat_auto_outlined,
+              title: AppLocalizations.of(context)!.temperature,
+              child: days.isNotEmpty ? Scrollbar(
                 controller: _scrollController,
                 child: ListView.separated(
                   itemCount: days.length,
@@ -50,14 +51,33 @@ class TemperaturesPage extends StatelessWidget {
                   },
                   controller: _scrollController,
                 ),
-              );
-            }),
-        onLeftButtonPressed: () {
-          _scrollController.jumpTo(_scrollController.position.minScrollExtent);
-        },
-        onRightButtonPressed: () {
-          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-        }
-    );
+              ) : Center(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.sentiment_dissatisfied_outlined,
+                          color: Colors.red,
+                          size: 40.0,
+                        ),
+                        SizedBox(height: 8.0),
+                        Text(
+                            AppLocalizations.of(context)!.noData,
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold
+                            )
+                        )
+                      ]
+                  )
+              ),
+              onLeftButtonPressed: days.isNotEmpty ? () {
+                _scrollController.jumpTo(_scrollController.position.minScrollExtent);
+              } : null,
+              onRightButtonPressed: days.isNotEmpty ? () {
+                _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+              } : null
+          );
+        });
   }
 }

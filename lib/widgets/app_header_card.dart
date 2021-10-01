@@ -24,20 +24,20 @@ class AppHeaderCard extends StatelessWidget {
     required Widget child,
     required IconData? icon,
     required String title,
-    required VoidCallback onLeftButtonPressed,
-    required VoidCallback onRightButtonPressed}) {
+    required VoidCallback? onLeftButtonPressed,
+    required VoidCallback? onRightButtonPressed}) {
     return AppHeaderCard(
         child: child,
         icon: icon,
         title: title,
-        leftHeaderWidget: IconButton(
+        leftHeaderWidget: (onLeftButtonPressed != null) ? IconButton(
             icon: Icon(Icons.arrow_circle_up, color: _mainColor),
             onPressed: onLeftButtonPressed
-        ),
-        rightHeaderWidget: IconButton(
+        ) : null,
+        rightHeaderWidget: (onRightButtonPressed != null) ? IconButton(
             icon: Icon(Icons.arrow_circle_down, color: _mainColor),
             onPressed: onRightButtonPressed
-        )
+        ) : null
     );
   }
 

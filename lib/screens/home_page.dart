@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:weather_info/models/home_model.dart';
@@ -119,66 +120,72 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: GradientContainer(
-            child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(height: 0.5 * Constants.appMargin),
-                    _buildInfo(),
-                    SizedBox(height: Constants.appMargin),
-                    Expanded(
-                        child: Consumer<HomeModel>(
-                            builder: (_, home, __) {
-                              switch (home.apiStatus) {
-                                case WeatherApiStatus.loaded:
-                                  if (home.hasData) {
-                                    return _buildPageView();
-                                  } else {
-                                    return Container();
-                                  }
-                                case WeatherApiStatus.loading:
-                                  return Container(
-                                      alignment: Alignment.center,
-                                      child: CircularProgressIndicator(
-                                          color: Colors.amberAccent
-                                      )
-                                  );
-                                case WeatherApiStatus.error:
-                                  return Container(
-                                      child: Center(
-                                        child: AppCard(
-                                            child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                    home.apiErrorMessage ?? '',
-                                                    style: TextStyle(
-                                                        color: Colors.red,
-                                                        fontWeight: FontWeight.bold
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+          body: GradientContainer(
+              child: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(height: 0.5 * Constants.appMargin),
+                      _buildInfo(),
+                      SizedBox(height: Constants.appMargin),
+                      Expanded(
+                          child: Consumer<HomeModel>(
+                              builder: (_, home, __) {
+                                switch (home.apiStatus) {
+                                  case WeatherApiStatus.loaded:
+                                    if (home.hasData) {
+                                      return _buildPageView();
+                                    } else {
+                                      return Container();
+                                    }
+                                  case WeatherApiStatus.loading:
+                                    return Container(
+                                        alignment: Alignment.center,
+                                        child: CircularProgressIndicator(
+                                            color: Colors.amberAccent
+                                        )
+                                    );
+                                  case WeatherApiStatus.error:
+                                    return Container(
+                                        child: Center(
+                                          child: AppCard(
+                                              child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      home.apiErrorMessage ?? '',
+                                                      style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontWeight: FontWeight.bold
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 10),
-                                                  CustomAppButton(
-                                                      iconData: Icons.error,
-                                                      title: 'Retry',
-                                                      onPressed: () {
-                                                        final homeModel = context.read<HomeModel>();
-                                                        homeModel.fetchData();
-                                                      })
-                                                ]),
-                                            padding: EdgeInsets.all(Constants.appPadding),
-                                          ),
-                                      )
-                                  );
-                              }
-                            })
-                    ),
-                  ],
-                )
-            )
-        )
+                                                    SizedBox(height: 10),
+                                                    CustomAppButton(
+                                                        iconData: Icons.error,
+                                                        title: 'Retry',
+                                                        onPressed: () {
+                                                          final homeModel = context.read<HomeModel>();
+                                                          homeModel.fetchData();
+                                                        })
+                                                  ]),
+                                              padding: EdgeInsets.all(Constants.appPadding),
+                                            ),
+                                        )
+                                    );
+                                }
+                              })
+                      ),
+                    ],
+                  )
+              )
+          )
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 {
   "appTitle": "Погодный монитор",
   "selectYourLocation": "Выберите ваше местоположение",
+  "noData": "Нет данных",
   "today": "Сегодня",
   "temperature": "Температура",
   "minimum": "Минимум",

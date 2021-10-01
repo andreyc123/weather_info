@@ -1,6 +1,7 @@
 {
   "appTitle": "Weather Monitor",
   "selectYourLocation": "Select Your Location",
+  "noData": "No Data!",
   "today": "Today",
   "temperature": "Temperature",
   "minimum": "Minimum",

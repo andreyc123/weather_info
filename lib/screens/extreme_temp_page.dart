@@ -12,8 +12,9 @@ enum ExtremeTemperatureKind { minimum, maximum }
 class ExtremeTemperaturesPage extends StatelessWidget {
   final ExtremeTemperatureKind kind;
   final Color _color;
+  final _scrollController = ScrollController();
 
-  const ExtremeTemperaturesPage({
+  ExtremeTemperaturesPage({
     required this.kind
   }) : _color = kind == ExtremeTemperatureKind.minimum ? Colors.blue : Colors.red;
 
@@ -45,7 +46,7 @@ class ExtremeTemperaturesPage extends StatelessWidget {
     }
 
     final localizedTemp = loc.temperature.toLowerCase();
-    return AppHeaderCard(
+    return AppHeaderCard.arrowButtons(
         icon: icon,
         title: prefix + ' ' + localizedTemp,
         child: Consumer<HomeModel>(
@@ -60,6 +61,7 @@ class ExtremeTemperaturesPage extends StatelessWidget {
                   break;
               }
               return Scrollbar(
+                controller: _scrollController,
                 child: ListView.separated(
                   itemCount: days.length,
                   itemBuilder: (context, index) {
@@ -71,9 +73,16 @@ class ExtremeTemperaturesPage extends StatelessWidget {
                       endIndent: Constants.appPadding,
                     );
                   },
+                  controller: _scrollController,
                 ),
               );
-            })
+            }),
+        onLeftButtonPressed: () {
+          _scrollController.jumpTo(_scrollController.position.minScrollExtent);
+        },
+        onRightButtonPressed: () {
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        }
     );
   }
 }

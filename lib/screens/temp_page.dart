@@ -8,7 +8,9 @@ import 'package:weather_info/widgets/weather_day.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TemperaturesPage extends StatelessWidget {
-  const TemperaturesPage({Key? key}) : super(key: key);
+  final _scrollController = ScrollController();
+
+  TemperaturesPage({Key? key}) : super(key: key);
 
   WeatherDay _buildDay(BuildContext context, WeatherDayModel dayModel, int number) {
     final loc = AppLocalizations.of(context)!;
@@ -27,13 +29,14 @@ class TemperaturesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppHeaderCard(
+    return AppHeaderCard.arrowButtons(
         icon: Icons.thermostat_auto_outlined,
         title: AppLocalizations.of(context)!.temperature,
         child: Consumer<HomeModel>(
             builder: (_, home, __) {
               final days = home.temperatureDays;
               return Scrollbar(
+                controller: _scrollController,
                 child: ListView.separated(
                   itemCount: days.length,
                   itemBuilder: (context, index) {
@@ -45,9 +48,16 @@ class TemperaturesPage extends StatelessWidget {
                       endIndent: Constants.appPadding,
                     );
                   },
+                  controller: _scrollController,
                 ),
               );
-            })
+            }),
+        onLeftButtonPressed: () {
+          _scrollController.jumpTo(_scrollController.position.minScrollExtent);
+        },
+        onRightButtonPressed: () {
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        }
     );
   }
 }

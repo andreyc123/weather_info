@@ -5,8 +5,9 @@ import 'package:weather_info/api_client/weather_web_api_client.dart';
 import 'package:weather_info/common/shared_prefs_app_settings.dart';
 import 'package:weather_info/models/home_model.dart';
 import 'package:weather_info/models/locations_model.dart';
-import 'package:weather_info/screens/home_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:weather_info/screens/home_page.dart';
+import 'package:weather_info/screens/select_country_page.dart';
 import 'common/app_storage_impl.dart';
 
 void main() {
@@ -34,6 +35,19 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/':
+              return MaterialPageRoute(
+                  settings: RouteSettings(name: '/', arguments: Map()),
+                  builder: (_) => HomePage()
+              );
+            case '/country':
+              return MaterialPageRoute(builder: (_) => SelectCountryPage());
+          }
+          assert(false, 'Need to implement ${settings.name}');
+          return null;
+        },
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -44,7 +58,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomePage(),
+        initialRoute: '/',
       )
     );
   }

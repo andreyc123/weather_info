@@ -6,7 +6,6 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:weather_info/models/home_model.dart';
 import 'package:weather_info/models/locations_model.dart';
 import 'package:weather_info/screens/records_page.dart';
-import 'package:weather_info/screens/select_country_page.dart';
 import 'package:weather_info/widgets/app_card.dart';
 import 'package:weather_info/screens/temp_page.dart';
 import 'package:weather_info/screens/extreme_temp_page.dart';
@@ -19,29 +18,54 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  static final String isNewLocationKey = 'isNewLocation';
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation _locationButtonAnimation;
   int _selectedPageIndex = 0;
+
+  Map get _arguments => ModalRoute.of(context)!.settings.arguments! as Map;
 
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 300)
+    );
+    _locationButtonAnimation = Tween<double>(begin: 1.0, end: 1.07)
+        .animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+    _animationController.addListener(() {
+      setState(() {});
+    });
     Future.microtask(() {
       final locale = Localizations.localeOf(context).toString();
       context.read<LocationsModel>().readData(locale: locale);
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
+  }
+
   void _navigateToCountriesPage() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => SelectCountryPage()
-        )
-    );
+    _arguments.remove(HomePage.isNewLocationKey);
+    Navigator.pushNamed(context, '/country').then((_) {
+      if (_arguments[HomePage.isNewLocationKey] != null) {
+        final tickerFuture = _animationController.repeat(reverse: true);
+        tickerFuture.timeout(Duration(milliseconds: 1800), onTimeout:  () {
+          _animationController.forward(from: 0);
+          _animationController.stop(canceled: true);
+        });
+      }
+    });
   }
 
   _selectDate(BuildContext context) async {
@@ -65,12 +89,20 @@ class _HomePageState extends State<HomePage> {
           Selector<HomeModel, String>(
               selector: (_, home) => home.getSelectedLocationAsString(context),
               builder: (_, locationAsString, __) {
-                return CustomAppButton(
-                    iconData: Icons.location_city_outlined,
-                    title: locationAsString,
-                    onPressed: () {
-                      _navigateToCountriesPage();
-                    });
+                return AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (BuildContext context, Widget? child) {
+                    return Transform.scale(
+                      scale: _locationButtonAnimation.value,
+                      child: CustomAppButton(
+                          iconData: Icons.location_city_outlined,
+                          title: locationAsString,
+                          onPressed: () {
+                            _navigateToCountriesPage();
+                          }),
+                    );
+                  },
+                );
               }),
           SizedBox(height: 4.0),
           Row(
@@ -168,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                                     SizedBox(height: 10),
                                                     CustomAppButton(
                                                         iconData: Icons.error,
-                                                        title: 'Retry',
+                                                        title: AppLocalizations.of(context)!.retry,
                                                         onPressed: () {
                                                           final homeModel = context.read<HomeModel>();
                                                           homeModel.fetchData();

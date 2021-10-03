@@ -8,6 +8,8 @@ import 'package:weather_info/widgets/gradient_container.dart';
 import 'package:weather_info/constants/constants.dart' as Constants;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'home_page.dart';
+
 class SelectCityPage extends StatelessWidget {
   final _focusNode = FocusNode();
 
@@ -123,7 +125,14 @@ class SelectCityPage extends StatelessWidget {
                           onTap: () {
                             final home = context.read<HomeModel>();
                             home.changeLocation(countryId: selectCity.selectedCountryId, cityId: city.id);
-                            Navigator.of(context).popUntil((route) => route.isFirst);
+                            Navigator.of(context).popUntil((route) {
+                              if (route.settings.name == '/') {
+                                (route.settings.arguments as Map)[HomePage.isNewLocationKey] = true;
+                                return true;
+                              } else {
+                                return false;
+                              }
+                            });
                           });
                     })
             )

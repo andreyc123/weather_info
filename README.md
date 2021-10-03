@@ -1,4 +1,4 @@
-# Weather Info
+# Weather Monitor
 
 This application is a demo project that I’ve written to learn the Dart programming language and get basics of Flutter.
 This application uses using http://www.pogodaiklimat.ru/ web resource to get information about the weather.
@@ -35,9 +35,9 @@ It has the following format:
 ]
 ```
 
-* country *id* is a just arbitrary identifier
-* country *name* is a name with two possible variants in English and Russian 
-* *assetName* is a filename of country's flag that is bundled inside *images* folder of this project
-* *cities* is the cities' list of this country
-* city *id* is an identifier from http://www.pogodaiklimat.ru/ web resource
-* city *name* is a name with two possible variants in English and Russian
+* country **id** is a just arbitrary identifier
+* country **name** is a name with two possible variants in *English* and *Russian* 
+* **assetName** is a filename of country's flag that is bundled inside *images* folder of this project
+* **cities** is the cities' list of this country
+* city **id** is an identifier from http://www.pogodaiklimat.ru/ web resource
+* city **name** is a name with two possible variants in *English* and *Russian*

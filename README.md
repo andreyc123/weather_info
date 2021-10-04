@@ -1,7 +1,7 @@
 # Weather Monitor
 
 This application is a demo project that I’ve written to learn the Dart programming language and get basics of Flutter.
-This application uses using http://www.pogodaiklimat.ru/ web resource to get information about the weather.
+This application uses http://www.pogodaiklimat.ru/ web resource to get information about the weather.
 I’ve not found any web API provided by this web resource, so I decided just to parse their web page and get data from HTML markup.
 Note that it can be broken in the future if they change their HTML markup.    
 
@@ -30,7 +30,7 @@ It has the following format:
       },
       ...
     ]
- }
+ },
  ...
 ]
 ```
